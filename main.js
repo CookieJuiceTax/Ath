@@ -11,7 +11,6 @@ $('#ui-bar').remove();
 $(document.head).find('#style-ui-bar').remove();
 
 
-// Load Firebase SDK scripts
 function loadScript(src, callback) {
   const script = document.createElement("script");
   script.src = src;
