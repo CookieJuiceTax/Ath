@@ -7,7 +7,5 @@ function loadCSS(href) {
 
 loadCSS("https://cookiejuicetax.github.io/Ath/style.css");
 
-$(document).on(':storyready', function () {
-  $('#ui-bar').remove();
-  $(document.head).find('#style-ui-bar').remove();
-});
+$('#ui-bar').remove();
+$(document.head).find('#style-ui-bar').remove();
