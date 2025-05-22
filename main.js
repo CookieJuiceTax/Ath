@@ -1,3 +1,2 @@
-$(document).on(':storyready', function () {
-  alert("External JS loaded!");
-});
+$('#ui-bar').remove();
+$(document.head).find('#style-ui-bar').remove();
