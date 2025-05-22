@@ -5,7 +5,7 @@ function loadCSS(href) {
   document.head.appendChild(link);
 }
 
-loadCSS("https://cookiejuicetax.github.io/Ath/style.css");
+loadCSS("https://cookiejuicetax.github.io/Poan/style.css");
 
 $('#ui-bar').remove();
 $(document.head).find('#style-ui-bar').remove();
