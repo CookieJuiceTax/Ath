@@ -1,3 +1,10 @@
+function loadCSS(href) {
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = href;
+  document.head.appendChild(link);
+}
+loadCSS("https://cookiejuicetax.github.io/Poan/style.css");
 
 function loadScript(src, callback) {
   const script = document.createElement("script");
@@ -5,7 +12,6 @@ function loadScript(src, callback) {
   script.onload = callback;
   document.head.appendChild(script);
 }
-
 
 $(function () {
   $('#ui-bar').remove();
@@ -27,12 +33,3 @@ $(function () {
     });
   });
 });
-
-function loadCSS(href) {
-  const link = document.createElement("link");
-  link.rel = "stylesheet";
-  link.href = href;
-  document.head.appendChild(link);
-}
-
-loadCSS("https://cookiejuicetax.github.io/Poan/style.css");
