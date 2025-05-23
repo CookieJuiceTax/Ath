@@ -1,18 +1,16 @@
-function loadCSS(href) {
-  const link = document.createElement("link");
-  link.rel = "stylesheet";
-  link.href = href;
-  document.head.appendChild(link);
+
+function loadScript(src, callback) {
+  const script = document.createElement("script");
+  script.src = src;
+  script.onload = callback;
+  document.head.appendChild(script);
 }
 
-loadCSS("https://cookiejuicetax.github.io/Poan/style.css");
 
 $(function () {
-  // Hide the UI bar
   $('#ui-bar').remove();
   $(document.head).find('#style-ui-bar').remove();
 
-  // Load Firebase
   loadScript("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js", function () {
     loadScript("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js", function () {
       const firebaseConfig = {
@@ -29,3 +27,12 @@ $(function () {
     });
   });
 });
+
+function loadCSS(href) {
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = href;
+  document.head.appendChild(link);
+}
+
+loadCSS("https://cookiejuicetax.github.io/Poan/style.css");
