@@ -38,3 +38,16 @@ $(function () {
     });
   });
 });
+
+$(document).ready(function () {
+  const overlay = document.createElement("div");
+  overlay.id = "black-cover-everything-disable-clicking-3s-fadein";
+  document.body.appendChild(overlay);
+
+  setTimeout(() => {
+    overlay.style.opacity = "0";
+    setTimeout(() => overlay.remove(), 3000);
+  }, 100);
+});
+
+
