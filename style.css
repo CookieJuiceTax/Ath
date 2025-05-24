@@ -1,0 +1,9 @@
+#black-cover-everything-disable-clicking-3s-fadein {
+  position: fixed;
+  inset: 0;
+  background: black;
+  z-index: 10000;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 3s ease;
+}
