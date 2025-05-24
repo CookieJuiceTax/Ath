@@ -41,7 +41,7 @@ $(function () {
 
 $(document).ready(function () {
   const overlay = document.createElement("div");
-  overlay.id = "black-cover-everything-disable-clicking-3s-fadein";
+  overlay.id = "black-covers-everything-disable-clicking-3s-fadein";
   document.body.appendChild(overlay);
 
   setTimeout(() => {
