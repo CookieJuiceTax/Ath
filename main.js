@@ -17,62 +17,76 @@ function loadScript(src, callback) {
   document.head.appendChild(script);
 }
 
-
+// This is jQuery's document ready. It's fine for DOM manipulation like removing ui-bar.
+// The Firebase SDK loading will also start from here.
 $(function () {
-  
   $('#ui-bar').remove();
   $(document.head).find('#style-ui-bar').remove();
 
- 
   const firebaseAppURL = "https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js";
   const firebaseAuthURL = "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"; 
   const firebaseFirestoreURL = "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js";
 
-
+  // This nested loading ensures SDKs are loaded in order before initializing Firebase
   loadScript(firebaseAppURL, function () {
     console.log("Firebase App SDK loaded.");
     loadScript(firebaseAuthURL, function () {
       console.log("Firebase Auth SDK loaded.");
       loadScript(firebaseFirestoreURL, function () {
         console.log("Firebase Firestore SDK loaded.");
-        
-        initializeFirebaseAndAuth();
+        // All Firebase SDKs are loaded, now initialize
+        initializeFirebaseAndAuth(); // This is where Firebase gets set up
       });
     });
   });
 });
 
 function initializeFirebaseAndAuth() {
-
   const firebaseConfig = {
-    apiKey: "AIzaSyBOGHmgo2Hc2j5f9rWMb1dYSNFuQWhcCuQ",
+    apiKey: "AIzaSyBOGHmgo2Hc2j5f9rWMb1dYSNFuQWhcCuQ", // Your actual API key
     authDomain: "poan-57f54.firebaseapp.com",
     projectId: "poan-57f54",
     messagingSenderId: "860885646745",
     appId: "1:860885646745:web:d5fcc385e3c85f78336708"
-    
   };
 
   try {
-  
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     } else {
       firebase.app(); 
     }
     
-    window.auth = firebase.auth();   
-    window.db = firebase.firestore();  
+    window.auth = firebase.auth();    
+    window.db = firebase.firestore();   
     
-    console.log("✅ Firebase App, Auth, and Firestore initialized successfully");
+    console.log("✅ Firebase App, Auth, and Firestore initialized successfully in main.js");
 
+    // <<< NEW PART: Signal to Twine that main.js is ready >>>
+    if (typeof window.onMyGameScriptsReady === 'function') {
+      console.log("main.js: Calling window.onMyGameScriptsReady()...");
+      window.onMyGameScriptsReady(); // Call the callback defined by Twine
+    } else {
+      // This might happen if Twine's StoryInit hasn't run yet to define the callback,
+      // or if main.js is somehow loaded before StoryInit sets up the callback.
+      // The Twine part should define this first.
+      console.warn("main.js: Twine callback 'onMyGameScriptsReady' not found yet. This might be okay if StoryInit runs after this log.");
+    }
+    // <<< END NEW PART >>>
 
   } catch (error) {
-    console.error("Firebase initialization failed:", error);
+    console.error("Firebase initialization failed in main.js:", error);
+    // <<< NEW PART: Signal error to Twine >>>
+    if (typeof window.onMyGameScriptsError === 'function') {
+      window.onMyGameScriptsError("Firebase init failed: " + error.message);
+    }
+    // <<< END NEW PART >>>
   }
 }
 
-
+// Initial black overlay fade-in (your existing code)
+// This $(document).ready might run before or after the one that loads Firebase,
+// which is generally fine for independent UI effects.
 $(document).ready(function () {
   if (!window.initialFadeDone) { 
     const overlay = document.createElement("div");
@@ -97,10 +111,8 @@ $(document).ready(function () {
   }
 });
 
-
-
+// Your MyGameLogin object (This is the code I provided previously, it should be here)
 window.MyGameLogin = {
-
   signInWithGoogle: async function() {
     if (!window.auth) throw new Error("Firebase Auth not ready.");
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -111,7 +123,6 @@ window.MyGameLogin = {
 
       let profileData;
       let isNewFirestoreProfile = false;
-
       
       const userDocRef = window.db.collection("users").doc(user.uid);
       const userDocSnap = await userDocRef.get();
@@ -124,9 +135,7 @@ window.MyGameLogin = {
           googleDisplayName: user.displayName || "",
           googlePhotoURL: user.photoURL || "",
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-
         };
-
         await userDocRef.set(profileData, { merge: true });
       } else {
         console.log("Existing user signed in with Google:", user.uid, user.email);
@@ -150,8 +159,8 @@ window.MyGameLogin = {
     }
   },
 
-
   signOut: async function() {
+    // ... (signOut function code as provided before) ...
     if (!window.auth) throw new Error("Firebase Auth not ready.");
     try {
       await window.auth.signOut();
@@ -162,16 +171,13 @@ window.MyGameLogin = {
     }
   },
 
-
   checkAuthState: function(callback) {
+    // ... (checkAuthState function code as provided before) ...
     if (!window.auth || !window.db) {
       console.warn("Firebase (Auth or DB) not fully ready for auth state check. Retrying in 250ms...");
-      setTimeout(() => MyGameLogin.checkAuthState(callback), 250);
+      setTimeout(() => MyGameLogin.checkAuthState(callback), 250); // Use MyGameLogin here
       return;
     }
-    
-
-
     
     window.auth.onAuthStateChanged(async (user) => {
       if (user) { 
@@ -204,5 +210,4 @@ window.MyGameLogin = {
       }
     });
   }
-
 };
