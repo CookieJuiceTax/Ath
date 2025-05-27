@@ -7,3 +7,6 @@
   opacity: 1;
   transition: opacity 3s ease;
 }
+
+#ui-bar {
+  display: none !important;
