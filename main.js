@@ -43,7 +43,7 @@ $(function () {
 
 function initializeFirebaseAndAuth() {
   const firebaseConfig = {
-    apiKey: "AIzaSyBOGHmgo2Hc2j5f9rWMb1dYSNFuQWhcCuQ", // Your actual API key
+    apiKey: "AIzaSyDs1Vy6K8HJJR4SdiziVRDx9h0pN4hv94g", // Your actual API key
     authDomain: "poan-57f54.firebaseapp.com",
     projectId: "poan-57f54",
     messagingSenderId: "860885646745",
