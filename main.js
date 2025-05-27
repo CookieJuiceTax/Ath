@@ -41,12 +41,12 @@ $(function () {
 
 function initializeFirebaseAndAuth() {
   const firebaseConfig = {
-    apiKey: "AIzaSyDs1Vy6K8HJJR4SdiziVRDx9h0pN4hv94g", 
-    authDomain: "poan-57f54.firebaseapp.com",
-    projectId: "poan-57f54",
-    storageBucket: "poan-57f54.firebasestorage.app",
-    messagingSenderId: "860885646745",
-    appId: "1:860885646745:web:d5fcc385e3c85f78336708"
+    apiKey: "AIzaSyDs1Vy6K8HJJR4SdiziVRDx9h0pN4hv94g", // This IS your NEW "PoanAPI" key
+    authDomain: "poan-57f54.firebaseapp.com",          // From Firebase Console
+    projectId: "poan-57f54",                           // From Firebase Console
+    storageBucket: "poan-57f54.firebasestorage.app",   // <<< ENSURE THIS IS HERE AND CORRECT
+    messagingSenderId: "860885646745",                  // From Firebase Console
+    appId: "1:860885646745:web:d5fcc385e3c85f78336708"   // From Firebase Console
   };
 
   try {
@@ -59,7 +59,7 @@ function initializeFirebaseAndAuth() {
     window.auth = firebase.auth();    
     window.db = firebase.firestore();   
     
-    console.log("✅ Firebase App, Auth, and Firestore initialized successfully in main.js");
+    console.log("✅ Firebase App, Auth, and Firestore initialized successfully in main.js (with complete config)");
 
     if (typeof window.onMyGameScriptsReady === 'function') {
       console.log("main.js: Calling window.onMyGameScriptsReady()...");
