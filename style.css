@@ -10,3 +10,10 @@
 
 #ui-bar {
   display: none !important;
+
+html, body {
+  overflow: hidden !important;
+}
+#story {
+    overflow: hidden !important;
+}
